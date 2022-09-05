@@ -102,7 +102,7 @@ contenedor.save(informacionNueva).then(resPromise => {
 })
 
 contenedor.getAll().then(resPromise => {
-    console.log(resPromise)
+    console.log(resPromise)1
 })
 
 contenedor.deleteById(3).then(resPromise => {
