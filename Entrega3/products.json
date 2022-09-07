@@ -1,0 +1,11 @@
+[
+        {"id":1,
+         "title":"nueces",
+         "price":"180"},
+        {"id":2,
+          "title":"almendras",
+          "price":"220"},
+        {"id":3,
+         "title":"pistachos",
+         "price":"380"}
+]
