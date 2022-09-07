@@ -1,4 +1,8 @@
-const fs = require('fs')
+const fs = require('fs');
+const express = require('express');
+const PORT = process.env.PORT || 8080;
+const app = express();
+
 
 class Contenedor {
 
@@ -71,6 +75,17 @@ class Contenedor {
         }
     }
 
+    async getProductRandom() {
+        try {
+            const content = await this.getAll();
+            const productRandom = content[Math.floor(Math.random() * content.length)]
+            return productRandom
+        }
+        catch (err) {
+            return err
+        }
+    }
+
     async deleteAll() {
         try {
             await fs.promises.writeFile(this.fileName, JSON.stringify([]))
@@ -112,3 +127,24 @@ contenedor.deleteById(3).then(resPromise => {
 contenedor.deleteAll().then(resPromise => {
     console.log(resPromise)
 }) */
+
+app.get('/productos', async (req,res) => {
+    contenedor.getAll().then((products) => res.send(products)) 
+})
+
+app.get('/productoRandom', async (req,res) => {
+    contenedor.getProductRandom().then((product) => res.send(product))
+})
+
+app.get('*', async (req,res) => {
+    res.send('Ir a <a href="./productos">Productos</a> \n Ir a <a href="./productoRandom">Producto Random</a>')
+})
+
+
+
+
+// Escuchar puerto seteado
+const connectedServer = app.listen(PORT, () => {console.log(`Server is UP and RUNNING on http://localhost:${PORT}`)})
+
+// Caputra el error y lo muestra
+connectedServer.on('error', (error) => {console.log(error)}) 
